@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Report Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    label,
+    input {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Health Report Form</h1>
+
+  <form  meathod = "post" action="connect.php" id="healthReportForm" onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" required>
+
+    <label for="weight">Weight:</label>
+    <input type="number" id="weight" required>
+
+    <label for="email">Email ID:</label>
+    <input type="email" id="email" required>
+
+    <label for="healthReport">Upload Health Report:</label>
+    <input type="file" id="healthReport" required accept=".pdf, .doc, .docx">
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById("name").value;
+      var age = document.getElementById("age").value;
+      var weight = document.getElementById("weight").value;
+      var email = document.getElementById("email").value;
+      var healthReport = document.getElementById("healthReport").value;
+
+      var errorMessages = [];
+
+      if (!name) {
+        errorMessages.push("Name is required.");
+      }
+
+      if (!age) {
+        errorMessages.push("Age is required.");
+      } else if (age <= 0) {
+        errorMessages.push("Age must be a positive number.");
+      }
+
+      if (!weight) {
+        errorMessages.push("Weight is required.");
+      } else if (weight <= 0) {
+        errorMessages.push("Weight must be a positive number.");
+      }
+
+      if (!email) {
+        errorMessages.push("Email ID is required.");
+      } else if (!validateEmail(email)) {
+        errorMessages.push("Invalid email format.");
+      }
+
+      if (!healthReport) {
+        errorMessages.push("Health report is required.");
+      }
+
+      if (errorMessages.length > 0) {
+        var errorText = errorMessages.join("\n");
+        alert(errorText);
+        return false;
+      }
+
+     
+
+      return true;
+    }
+
+    function validateEmail(email) {
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
